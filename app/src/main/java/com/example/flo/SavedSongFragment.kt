@@ -1,8 +1,6 @@
 package com.example.flo
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,14 +10,18 @@ import com.example.flo.databinding.FragmentLockerSavedsongBinding
 
 class SavedSongFragment : Fragment() {
     lateinit var binding: FragmentLockerSavedsongBinding
-
-
+    private var songDatas = ArrayList<Song>()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentLockerSavedsongBinding.inflate(inflater, container, false)
+        songDatas.apply {
+            add(Song("Butter","방탄소년단 (BTS)",0,0,false,"",R.drawable.img_album_exp))
+            add(Song("Lilac","아이유 (IU)",0,0,false,"",R.drawable.img_album_exp2))
+            add(Song("Next Level","에스파 (AESPA)",0,0,false,"",R.drawable.img_album_exp3))
+        }
 
         return binding.root
     }
@@ -29,7 +31,21 @@ class SavedSongFragment : Fragment() {
         initRecyclerview()
     }
 
-    private fun initRecyclerview(){
-        binding.lockerSavedSongRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+    private fun initRecyclerview() {
+        binding.lockerSavedSongRecyclerView.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
+        val songRVAdapter = SavedSongRVAdapter()
+        songRVAdapter.addSongs(songDatas)
+
+        songRVAdapter.setMyItemClickListener(object : SavedSongRVAdapter.MyItemClickListener {
+            override fun onRemoveSong(songId: Int) {
+
+            }
+
+        })
+
+        binding.lockerSavedSongRecyclerView.adapter = songRVAdapter
+
     }
 }

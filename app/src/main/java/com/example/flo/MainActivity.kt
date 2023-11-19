@@ -72,7 +72,8 @@ class MainActivity : AppCompatActivity() {
             false
         }
     }
-    private fun setMiniPlayer(song:Song){
+     fun setMiniPlayer(song:Song){
+         this.song = song
         binding.mainMiniplayerTitleTv.text = song.title
         binding.mainMiniplayerSingerTv.text = song.singer
         binding.mainMiniplayerProgressSb.progress = (song.second*100000)/song.playTime
